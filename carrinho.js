@@ -1,0 +1,31 @@
+var atualizaDados = function(){
+        var itens = $(".item-total:visible");
+            var total = 0;
+            for(var i=0; i < itens.length; i++) {
+                    var conteudo = $(itens[i]).text();
+                    var preco = parseFloat(conteudo);
+                    total += preco;
+                }
+            $("#valor-total").text(total);
+            $("#quantidade-de-itens").text(itens.length);
+};
+var removeItem = function(event) { 
+    event.preventDefault();
+
+    var self = $(this); 
+    self.closest("tr").hide(); 
+    
+    atualizaDados();
+};
+var undo = function() {
+    $("tr:visible").removeClass("recuperado");
+    var trs = $("tr:hidden");
+    trs.addClass("recuperado").show();
+    atualizaDados();
+};
+var aposInicializado = function() {
+    atualizaDados();
+    $("#undo").click(undo);
+    $(".remove-item").click(removeItem);
+};  
+$(aposInicializado);

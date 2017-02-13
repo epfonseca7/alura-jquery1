@@ -79,29 +79,37 @@
     <div>
         Valor Total: R$<span id="valor-total">0</span>
         <br>
-        Quantidade de items distintos: <span id='quantidade-de-items'>0</span> 
+        Quantidade de items distintos: <span id='quantidade-de-itens'>0</span> 
     </div>
     <script src="jquery-3.1.1.min.js"></script>  
     <script>
-        var removeItem = function(event) {
-            event.preventDefault();
-            var self = $(this);
-            self.closest("tr").remove();
-            var quantidadeComoString = $("#quantidade-de-items").text();
-            var atual = parseInt(quantidadeComoString);
-            var novaQuantidade = atual -1;
-            $('#quantidade-de-items').text(novaQuantidade);
-        };
-        $(".remove-item").click(removeItem);
+    var atualizaDados = function(){
         var items = $(".item-total");
-        var total = 0;
-        for (var i=0; i < items.length; i++){
-            var conteudo = $(items[i]).text();
-            var preco = parseFloat(conteudo);
-            total += preco;
-        }
-        $("#valor-total").text(total);
-        $('#quantidade-de-items').text(items.length);
-    </script>
+            var total = 0;
+            for(var i=0; i < items.length; i++) {
+                    var conteudo = $(items[i]).text();
+                    var preco = parseFloat(conteudo);
+                    total += preco;
+                }
+            $("#valor-total").text(total);
+            $("#quantidade-de-itens").text(items.length);
+    };
+
+    var removeItem = function(event) { 
+        event.preventDefault();
+
+        var self = $(this); 
+        self.closest("tr").remove(); 
+        atualizaDados();
+    };
+
+    var aposInicializado = function() {
+
+            $(".remove-item").click(removeItem);
+            atualizaDados();
+        };
+
+        $(aposInicializado);
+</script>
 </body>
 </html>
